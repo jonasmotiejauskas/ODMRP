@@ -13,13 +13,38 @@ namespace ODMRP
     public partial class MainWindow : Form
     {
         List<ODMRPelements.Node> nodeList = new List<ODMRPelements.Node>();
-        UIelements.NetworkPanel panel = new UIelements.NetworkPanel() { BackColor = Color.LightGray, Size = new Size(700, 500), Location = new Point(30, 140), BorderStyle = BorderStyle.FixedSingle };
-
+        UIelements.NetworkPanel panel; 
         public MainWindow()
         {
             InitializeComponent();
+
+            panel = new UIelements.NetworkPanel(nodeList)
+            {
+                BackColor = Color.LightGray,
+                Size = new Size(703, 503),
+                Location = new Point(30, 137),
+                BorderStyle = BorderStyle.FixedSingle
+            };
+
             Controls.Add(panel);
+
+            nodeList.Add(new ODMRPelements.Node());
+            
         }
 
+        private void AddNodeButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RemoveNode_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SendMessageButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

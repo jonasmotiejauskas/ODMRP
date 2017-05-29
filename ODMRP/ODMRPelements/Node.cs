@@ -8,9 +8,52 @@ namespace ODMRP.ODMRPelements
 {
     class Node
     {
-        public double NodeId { get; set; }
-        public double Coordinate_X { get; set; }
-        public double Coordinate_Y { get; set; }
-        public double Range { get; set; }
+        public static event EventHandler NodeUpdate;
+
+        public int NodeId { get; private set; }
+        private int _coordinateX;
+        private int _coordinateY;
+        private int _range;
+
+        protected virtual void OnThresholdReached(object sender, EventArgs e)
+        {
+            NodeUpdate?.Invoke(sender, e);
+        }
+
+        public Node()
+        {
+            NodeId = new IncrementalNumberGenerator().Number;
+            OnThresholdReached(this, new EventArgs());
+        }
+
+        public int CoordinateX
+        {
+            get { return _coordinateX; }
+            set
+            {
+                OnThresholdReached(this, new EventArgs());
+                _coordinateX = value;
+            }
+        }
+
+        public int CoordinateY
+        {
+            get { return _coordinateY; }
+            set
+            {
+                OnThresholdReached(this, new EventArgs());
+                _coordinateY = value;
+            }
+        }
+
+        public int Range
+        {
+            get { return _range; }
+            set
+            {
+                OnThresholdReached(this, new EventArgs());
+                _range = value;
+            }
+        }
     }
 }
