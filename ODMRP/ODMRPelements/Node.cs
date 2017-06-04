@@ -15,7 +15,7 @@ namespace ODMRP.ODMRPelements
         private int _coordinateY;
         private int _range;
 
-        protected virtual void OnThresholdReached(object sender, EventArgs e)
+        public virtual void OnThresholdReached(object sender, EventArgs e)
         {
             NodeUpdate?.Invoke(sender, e);
         }
@@ -23,7 +23,7 @@ namespace ODMRP.ODMRPelements
         public Node()
         {
             NodeId = new IncrementalNumberGenerator().Number;
-            OnThresholdReached(this, new EventArgs());
+            Range = 80;
         }
 
         public int CoordinateX
@@ -49,7 +49,7 @@ namespace ODMRP.ODMRPelements
         public int Range
         {
             get { return _range; }
-            set
+            private set
             {
                 OnThresholdReached(this, new EventArgs());
                 _range = value;

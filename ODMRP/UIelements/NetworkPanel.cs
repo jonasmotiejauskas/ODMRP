@@ -16,6 +16,7 @@ namespace ODMRP.UIelements
         public NetworkPanel(List<ODMRPelements.Node> n)
         {
             nodeList = n;
+            DoubleBuffered = false;
             ODMRPelements.Node.NodeUpdate += Node_NodeUpdate;
         }
 
@@ -27,25 +28,27 @@ namespace ODMRP.UIelements
         protected override void OnPaint(PaintEventArgs e)
         {
             //10 is the grid size in pixel
-            Bitmap bmp = new Bitmap(10, 10);
-            Graphics bmpG = Graphics.FromImage(bmp);
-            bmpG.DrawEllipse(Pens.Black, 0, 0, 1, 1);
-            bmpG.DrawEllipse(Pens.Black, 0, 10, 1, 1);
-            bmpG.DrawEllipse(Pens.Black, 10, 10, 1, 1);
-            bmpG.DrawEllipse(Pens.Black, 10, 0, 1, 1);
+            //Bitmap bmp = new Bitmap(10, 10);
+            //Graphics bmpG = Graphics.FromImage(bmp);
+            //bmpG.DrawEllipse(Pens.Black, 0, 0, 1, 1);
+            //bmpG.DrawEllipse(Pens.Black, 0, 10, 1, 1);
+            //bmpG.DrawEllipse(Pens.Black, 10, 10, 1, 1);
+            //bmpG.DrawEllipse(Pens.Black, 10, 0, 1, 1);
 
-            TextureBrush b = new TextureBrush(bmp);
+            //TextureBrush b = new TextureBrush(bmp);
 
-            e.Graphics.FillRectangle(b, this.ClientRectangle);
+            //e.Graphics.FillRectangle(b, this.ClientRectangle);
 
             foreach(var node in nodeList)
             {
-                e.Graphics.FillEllipse(Brushes.Black, new Rectangle(node.CoordinateX - 5, 500 - (500 + 5), 10, 10));
+                e.Graphics.FillEllipse(Brushes.Black, new Rectangle(node.CoordinateX - 3, 500 - (node.CoordinateY + 3), 6, 6));
+                e.Graphics.DrawEllipse(new Pen(Brushes.Black), new Rectangle(node.CoordinateX - node.Range, 500 - (node.CoordinateY) - node.Range, node.Range * 2, node.Range * 2));
+                e.Graphics.DrawString(node.NodeId.ToString(), new Font("Arial", 11), new SolidBrush(Color.Black), node.CoordinateX, 500 - (node.CoordinateY + 20), new StringFormat());
             }
 
-            bmp.Dispose();
-            bmpG.Dispose();
-            b.Dispose();
+            //bmp.Dispose();
+            //bmpG.Dispose();
+            //b.Dispose();
         }
     }
 }

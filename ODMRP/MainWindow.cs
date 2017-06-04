@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ODMRP
@@ -27,14 +22,14 @@ namespace ODMRP
             };
 
             Controls.Add(panel);
-
-            nodeList.Add(new ODMRPelements.Node());
             
         }
 
         private void AddNodeButton_Click(object sender, EventArgs e)
         {
-
+            ODMRPelements.Node newNode = new ODMRPelements.Node() { CoordinateX = (int)CoordXInput.Value, CoordinateY = (int)CoordYInput.Value };
+            nodeList.Add( newNode );
+            newNode.OnThresholdReached( newNode, new EventArgs());
         }
 
         private void RemoveNode_Click(object sender, EventArgs e)
