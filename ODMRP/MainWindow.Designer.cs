@@ -35,12 +35,19 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.NodeSelectPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.NodeSelectLabel = new System.Windows.Forms.Label();
             this.AddNodeButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.CoordYInput = new System.Windows.Forms.NumericUpDown();
+            this.CoordXInput = new System.Windows.Forms.NumericUpDown();
+            this.CoordYLabel = new System.Windows.Forms.Label();
+            this.CoordXLabel = new System.Windows.Forms.Label();
             this.Option3Label = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.NodeToIdInput = new System.Windows.Forms.NumericUpDown();
+            this.NodeFromIdInput = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.SendNodeFromLabel = new System.Windows.Forms.Label();
             this.SendMessageButton = new System.Windows.Forms.Button();
@@ -48,23 +55,15 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.Option1Name = new System.Windows.Forms.Label();
             this.RemoveNode = new System.Windows.Forms.Button();
-            this.CoordXLabel = new System.Windows.Forms.Label();
-            this.CoordYLabel = new System.Windows.Forms.Label();
-            this.RangeLabel = new System.Windows.Forms.Label();
-            this.RangeInput = new System.Windows.Forms.NumericUpDown();
-            this.CoordXInput = new System.Windows.Forms.NumericUpDown();
-            this.CoordYInput = new System.Windows.Forms.NumericUpDown();
-            this.NodeFromIdInput = new System.Windows.Forms.NumericUpDown();
-            this.NodeToIdInput = new System.Windows.Forms.NumericUpDown();
+            this.NodeSelectPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RangeInput)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CoordXInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CoordYInput)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NodeFromIdInput)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CoordXInput)).BeginInit();
+            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NodeToIdInput)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NodeFromIdInput)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -121,13 +120,31 @@
             this.label6.TabIndex = 5;
             this.label6.Text = "250";
             // 
-            // flowLayoutPanel1
+            // NodeSelectPanel
             // 
-            this.flowLayoutPanel1.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(747, 136);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(225, 513);
-            this.flowLayoutPanel1.TabIndex = 6;
+            this.NodeSelectPanel.AutoScroll = true;
+            this.NodeSelectPanel.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.NodeSelectPanel.Controls.Add(this.NodeSelectLabel);
+            this.NodeSelectPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.NodeSelectPanel.Location = new System.Drawing.Point(747, 136);
+            this.NodeSelectPanel.Name = "NodeSelectPanel";
+            this.NodeSelectPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.NodeSelectPanel.Size = new System.Drawing.Size(225, 513);
+            this.NodeSelectPanel.TabIndex = 6;
+            this.NodeSelectPanel.WrapContents = false;
+            // 
+            // NodeSelectLabel
+            // 
+            this.NodeSelectLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.NodeSelectLabel.AutoSize = true;
+            this.NodeSelectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.NodeSelectLabel.Location = new System.Drawing.Point(57, 8);
+            this.NodeSelectLabel.Margin = new System.Windows.Forms.Padding(57, 8, 67, 0);
+            this.NodeSelectLabel.Name = "NodeSelectLabel";
+            this.NodeSelectLabel.Size = new System.Drawing.Size(101, 18);
+            this.NodeSelectLabel.TabIndex = 12;
+            this.NodeSelectLabel.Text = "Select a Node";
+            this.NodeSelectLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // AddNodeButton
             // 
@@ -155,21 +172,63 @@
             this.panel4.BackColor = System.Drawing.SystemColors.Control;
             this.panel4.Controls.Add(this.CoordYInput);
             this.panel4.Controls.Add(this.CoordXInput);
-            this.panel4.Controls.Add(this.RangeInput);
-            this.panel4.Controls.Add(this.RangeLabel);
             this.panel4.Controls.Add(this.CoordYLabel);
             this.panel4.Controls.Add(this.CoordXLabel);
             this.panel4.Controls.Add(this.Option3Label);
-            this.panel4.Location = new System.Drawing.Point(493, 11);
+            this.panel4.Location = new System.Drawing.Point(482, 11);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(443, 91);
+            this.panel4.Size = new System.Drawing.Size(176, 91);
             this.panel4.TabIndex = 11;
+            // 
+            // CoordYInput
+            // 
+            this.CoordYInput.Location = new System.Drawing.Point(62, 14);
+            this.CoordYInput.Maximum = new decimal(new int[] {
+            700,
+            0,
+            0,
+            0});
+            this.CoordYInput.Name = "CoordYInput";
+            this.CoordYInput.Size = new System.Drawing.Size(92, 20);
+            this.CoordYInput.TabIndex = 22;
+            this.CoordYInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // CoordXInput
+            // 
+            this.CoordXInput.Location = new System.Drawing.Point(62, 42);
+            this.CoordXInput.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.CoordXInput.Name = "CoordXInput";
+            this.CoordXInput.Size = new System.Drawing.Size(92, 20);
+            this.CoordXInput.TabIndex = 21;
+            this.CoordXInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // CoordYLabel
+            // 
+            this.CoordYLabel.AutoSize = true;
+            this.CoordYLabel.Location = new System.Drawing.Point(11, 49);
+            this.CoordYLabel.Name = "CoordYLabel";
+            this.CoordYLabel.Size = new System.Drawing.Size(45, 13);
+            this.CoordYLabel.TabIndex = 18;
+            this.CoordYLabel.Text = "Coord Y";
+            // 
+            // CoordXLabel
+            // 
+            this.CoordXLabel.AutoSize = true;
+            this.CoordXLabel.Location = new System.Drawing.Point(11, 21);
+            this.CoordXLabel.Name = "CoordXLabel";
+            this.CoordXLabel.Size = new System.Drawing.Size(45, 13);
+            this.CoordXLabel.TabIndex = 17;
+            this.CoordXLabel.Text = "Coord X";
             // 
             // Option3Label
             // 
             this.Option3Label.AutoSize = true;
             this.Option3Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.Option3Label.Location = new System.Drawing.Point(154, 68);
+            this.Option3Label.Location = new System.Drawing.Point(38, 68);
             this.Option3Label.Name = "Option3Label";
             this.Option3Label.Size = new System.Drawing.Size(100, 18);
             this.Option3Label.TabIndex = 11;
@@ -186,30 +245,78 @@
             this.panel3.Controls.Add(this.Option2Label);
             this.panel3.Location = new System.Drawing.Point(199, 11);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(274, 91);
+            this.panel3.Size = new System.Drawing.Size(262, 91);
             this.panel3.TabIndex = 10;
+            // 
+            // NodeToIdInput
+            // 
+            this.NodeToIdInput.Location = new System.Drawing.Point(79, 42);
+            this.NodeToIdInput.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.NodeToIdInput.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NodeToIdInput.Name = "NodeToIdInput";
+            this.NodeToIdInput.Size = new System.Drawing.Size(92, 20);
+            this.NodeToIdInput.TabIndex = 24;
+            this.NodeToIdInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.NodeToIdInput.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // NodeFromIdInput
+            // 
+            this.NodeFromIdInput.InterceptArrowKeys = false;
+            this.NodeFromIdInput.Location = new System.Drawing.Point(79, 14);
+            this.NodeFromIdInput.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.NodeFromIdInput.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NodeFromIdInput.Name = "NodeFromIdInput";
+            this.NodeFromIdInput.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.NodeFromIdInput.Size = new System.Drawing.Size(92, 20);
+            this.NodeFromIdInput.TabIndex = 23;
+            this.NodeFromIdInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.NodeFromIdInput.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(16, 49);
+            this.label7.Location = new System.Drawing.Point(8, 49);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(57, 13);
+            this.label7.Size = new System.Drawing.Size(62, 13);
             this.label7.TabIndex = 14;
-            this.label7.Text = "Node to Id";
+            this.label7.Text = "Receiver Id";
             // 
             // SendNodeFromLabel
             // 
             this.SendNodeFromLabel.AutoSize = true;
-            this.SendNodeFromLabel.Location = new System.Drawing.Point(5, 21);
+            this.SendNodeFromLabel.Location = new System.Drawing.Point(13, 21);
             this.SendNodeFromLabel.Name = "SendNodeFromLabel";
-            this.SendNodeFromLabel.Size = new System.Drawing.Size(68, 13);
+            this.SendNodeFromLabel.Size = new System.Drawing.Size(54, 13);
             this.SendNodeFromLabel.TabIndex = 12;
-            this.SendNodeFromLabel.Text = "Node from Id";
+            this.SendNodeFromLabel.Text = "Source IP";
             // 
             // SendMessageButton
             // 
-            this.SendMessageButton.Location = new System.Drawing.Point(192, 10);
+            this.SendMessageButton.Location = new System.Drawing.Point(185, 10);
             this.SendMessageButton.Name = "SendMessageButton";
             this.SendMessageButton.Size = new System.Drawing.Size(62, 58);
             this.SendMessageButton.TabIndex = 11;
@@ -221,7 +328,7 @@
             // 
             this.Option2Label.AutoSize = true;
             this.Option2Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.Option2Label.Location = new System.Drawing.Point(106, 68);
+            this.Option2Label.Location = new System.Drawing.Point(86, 68);
             this.Option2Label.Name = "Option2Label";
             this.Option2Label.Size = new System.Drawing.Size(98, 18);
             this.Option2Label.TabIndex = 10;
@@ -258,97 +365,13 @@
             this.RemoveNode.UseVisualStyleBackColor = true;
             this.RemoveNode.Click += new System.EventHandler(this.RemoveNode_Click);
             // 
-            // CoordXLabel
-            // 
-            this.CoordXLabel.AutoSize = true;
-            this.CoordXLabel.Location = new System.Drawing.Point(11, 21);
-            this.CoordXLabel.Name = "CoordXLabel";
-            this.CoordXLabel.Size = new System.Drawing.Size(45, 13);
-            this.CoordXLabel.TabIndex = 17;
-            this.CoordXLabel.Text = "Coord X";
-            // 
-            // CoordYLabel
-            // 
-            this.CoordYLabel.AutoSize = true;
-            this.CoordYLabel.Location = new System.Drawing.Point(11, 49);
-            this.CoordYLabel.Name = "CoordYLabel";
-            this.CoordYLabel.Size = new System.Drawing.Size(45, 13);
-            this.CoordYLabel.TabIndex = 18;
-            this.CoordYLabel.Text = "Coord Y";
-            // 
-            // RangeLabel
-            // 
-            this.RangeLabel.AutoSize = true;
-            this.RangeLabel.Location = new System.Drawing.Point(188, 21);
-            this.RangeLabel.Name = "RangeLabel";
-            this.RangeLabel.Size = new System.Drawing.Size(39, 13);
-            this.RangeLabel.TabIndex = 19;
-            this.RangeLabel.Text = "Range";
-            // 
-            // RangeInput
-            // 
-            this.RangeInput.Location = new System.Drawing.Point(233, 14);
-            this.RangeInput.Maximum = new decimal(new int[] {
-            250,
-            0,
-            0,
-            0});
-            this.RangeInput.Name = "RangeInput";
-            this.RangeInput.Size = new System.Drawing.Size(92, 20);
-            this.RangeInput.TabIndex = 20;
-            this.RangeInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // CoordXInput
-            // 
-            this.CoordXInput.Location = new System.Drawing.Point(62, 14);
-            this.CoordXInput.Maximum = new decimal(new int[] {
-            700,
-            0,
-            0,
-            0});
-            this.CoordXInput.Name = "CoordXInput";
-            this.CoordXInput.Size = new System.Drawing.Size(92, 20);
-            this.CoordXInput.TabIndex = 21;
-            this.CoordXInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // CoordYInput
-            // 
-            this.CoordYInput.Location = new System.Drawing.Point(62, 42);
-            this.CoordYInput.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.CoordYInput.Name = "CoordYInput";
-            this.CoordYInput.Size = new System.Drawing.Size(92, 20);
-            this.CoordYInput.TabIndex = 22;
-            this.CoordYInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // NodeFromIdInput
-            // 
-            this.NodeFromIdInput.InterceptArrowKeys = false;
-            this.NodeFromIdInput.Location = new System.Drawing.Point(79, 14);
-            this.NodeFromIdInput.Name = "NodeFromIdInput";
-            this.NodeFromIdInput.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.NodeFromIdInput.Size = new System.Drawing.Size(92, 20);
-            this.NodeFromIdInput.TabIndex = 23;
-            this.NodeFromIdInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // NodeToIdInput
-            // 
-            this.NodeToIdInput.Location = new System.Drawing.Point(79, 42);
-            this.NodeToIdInput.Name = "NodeToIdInput";
-            this.NodeToIdInput.Size = new System.Drawing.Size(92, 20);
-            this.NodeToIdInput.TabIndex = 24;
-            this.NodeToIdInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 661);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.NodeSelectPanel);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -362,18 +385,19 @@
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ODMRP simulation";
+            this.NodeSelectPanel.ResumeLayout(false);
+            this.NodeSelectPanel.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CoordYInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CoordXInput)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NodeToIdInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NodeFromIdInput)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RangeInput)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CoordXInput)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CoordYInput)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NodeFromIdInput)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NodeToIdInput)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -387,7 +411,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel NodeSelectPanel;
         private System.Windows.Forms.Button AddNodeButton;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button RemoveNode;
@@ -400,14 +424,13 @@
         private System.Windows.Forms.Label Option2Label;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label Option3Label;
-        private System.Windows.Forms.Label RangeLabel;
         private System.Windows.Forms.Label CoordYLabel;
         private System.Windows.Forms.Label CoordXLabel;
         private System.Windows.Forms.NumericUpDown CoordYInput;
         private System.Windows.Forms.NumericUpDown CoordXInput;
-        private System.Windows.Forms.NumericUpDown RangeInput;
         private System.Windows.Forms.NumericUpDown NodeToIdInput;
         private System.Windows.Forms.NumericUpDown NodeFromIdInput;
+        private System.Windows.Forms.Label NodeSelectLabel;
     }
 }
 

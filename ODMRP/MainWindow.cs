@@ -7,13 +7,14 @@ namespace ODMRP
 {
     public partial class MainWindow : Form
     {
-        List<ODMRPelements.Node> nodeList = new List<ODMRPelements.Node>();
-        UIelements.NetworkPanel panel; 
+        UIelements.NetworkPanel panel;
+        ODMRPelements.Node selectedNode;
+         
         public MainWindow()
         {
             InitializeComponent();
 
-            panel = new UIelements.NetworkPanel(nodeList)
+            panel = new UIelements.NetworkPanel(NodeSelectPanel.Controls)
             {
                 BackColor = Color.LightGray,
                 Size = new Size(703, 503),
@@ -22,24 +23,104 @@ namespace ODMRP
             };
 
             Controls.Add(panel);
-            
+
+            RemoveNode.Enabled = false;
+            CoordXInput.Enabled = false;
+            CoordXInput.ValueChanged += CoordXInput_ValueChanged;
+            CoordYInput.Enabled = false;
+            CoordYInput.ValueChanged += CoordYInput_ValueChanged;
+        }
+
+        private void CoordYInput_ValueChanged(object sender, EventArgs e)
+        {
+            if(selectedNode != null)
+            {
+                selectedNode.CoordinateX = (int)(sender as NumericUpDown).Value;
+            }
+        }
+
+        private void CoordXInput_ValueChanged(object sender, EventArgs e)
+        {
+            if (selectedNode != null)
+            {
+                selectedNode.CoordinateY = (int)(sender as NumericUpDown).Value;
+            }
         }
 
         private void AddNodeButton_Click(object sender, EventArgs e)
         {
-            ODMRPelements.Node newNode = new ODMRPelements.Node() { CoordinateX = (int)CoordXInput.Value, CoordinateY = (int)CoordYInput.Value };
-            nodeList.Add( newNode );
-            newNode.OnThresholdReached( newNode, new EventArgs());
+            if(NodeSelectPanel.Controls.Count < 20)
+            {
+                ODMRPelements.Node newNode = new ODMRPelements.Node() { CoordinateX = 0, CoordinateY = 0 };
+
+                UIelements.NodePanel newPanel = new UIelements.NodePanel(newNode);
+                newPanel.Click += NewPanel_Click;
+                NodeSelectPanel.Controls.Add(newPanel);
+                NewPanel_Click(newPanel, new EventArgs());
+                newNode.OnThresholdReached(newNode, new EventArgs());
+            }
+
+            if(NodeSelectPanel.Controls.Count > 0)
+            {
+                RemoveNode.Enabled = true;
+            }
+        }
+
+        private void NewPanel_Click(object sender, EventArgs e)
+        {
+            
+
+            foreach (var a in NodeSelectPanel.Controls)
+            {
+                if(a is UIelements.NodePanel)
+                {
+                    (a as UIelements.NodePanel).NodeUnselect();
+                }
+            }
+
+            (sender as UIelements.NodePanel).NodeSelect();
+            selectedNode = (sender as UIelements.NodePanel).Node;
+            CoordXInput.Value = selectedNode.CoordinateY;
+            CoordYInput.Value = selectedNode.CoordinateX;
+
+
+            RemoveNode.Enabled = true;
+            CoordXInput.Enabled = true;
+            CoordYInput.Enabled = true;
         }
 
         private void RemoveNode_Click(object sender, EventArgs e)
         {
+            foreach (var a in NodeSelectPanel.Controls)
+            {
+                if (a is UIelements.NodePanel)
+                {
+                    UIelements.NodePanel panel = (a as UIelements.NodePanel);
+                    if (panel.Selected)
+                    {
+                        panel.NodeUnselect();
+                        selectedNode = null;
+                        NodeSelectPanel.Controls.Remove(panel);
+                        panel.Node.OnThresholdReached(panel.Node, new EventArgs());
+                        RemoveNode.Enabled = false;
+                        CoordXInput.Enabled = false;
+                        CoordYInput.Enabled = false;
+                        CoordXInput.Value = 0;
+                        CoordYInput.Value = 0;
+                    }
+                }
+            }
 
+            if (NodeSelectPanel.Controls.Count < 1)
+            {
+                RemoveNode.Enabled = false;
+            }
         }
 
         private void SendMessageButton_Click(object sender, EventArgs e)
         {
-
+            
         }
+
     }
 }

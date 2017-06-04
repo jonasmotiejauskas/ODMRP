@@ -11,11 +11,11 @@ namespace ODMRP.UIelements
     class NetworkPanel : Panel
     {
 
-        List<ODMRPelements.Node> nodeList = new List<ODMRPelements.Node>();
+        ControlCollection nodeCollection;
 
-        public NetworkPanel(List<ODMRPelements.Node> n)
+        public NetworkPanel(ControlCollection n)
         {
-            nodeList = n;
+            nodeCollection = n;
             DoubleBuffered = false;
             ODMRPelements.Node.NodeUpdate += Node_NodeUpdate;
         }
@@ -27,28 +27,26 @@ namespace ODMRP.UIelements
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            //10 is the grid size in pixel
-            //Bitmap bmp = new Bitmap(10, 10);
-            //Graphics bmpG = Graphics.FromImage(bmp);
-            //bmpG.DrawEllipse(Pens.Black, 0, 0, 1, 1);
-            //bmpG.DrawEllipse(Pens.Black, 0, 10, 1, 1);
-            //bmpG.DrawEllipse(Pens.Black, 10, 10, 1, 1);
-            //bmpG.DrawEllipse(Pens.Black, 10, 0, 1, 1);
 
-            //TextureBrush b = new TextureBrush(bmp);
-
-            //e.Graphics.FillRectangle(b, this.ClientRectangle);
-
-            foreach(var node in nodeList)
+            foreach(var nodeP in nodeCollection)
             {
-                e.Graphics.FillEllipse(Brushes.Black, new Rectangle(node.CoordinateX - 3, 500 - (node.CoordinateY + 3), 6, 6));
-                e.Graphics.DrawEllipse(new Pen(Brushes.Black), new Rectangle(node.CoordinateX - node.Range, 500 - (node.CoordinateY) - node.Range, node.Range * 2, node.Range * 2));
-                e.Graphics.DrawString(node.NodeId.ToString(), new Font("Arial", 11), new SolidBrush(Color.Black), node.CoordinateX, 500 - (node.CoordinateY + 20), new StringFormat());
+                if (nodeP is UIelements.NodePanel)
+                {
+                    var node = (nodeP as UIelements.NodePanel).Node;
+                    if((nodeP as UIelements.NodePanel).Selected)
+                    {
+                        e.Graphics.FillEllipse(Brushes.Red, new Rectangle(node.CoordinateX - 3, 500 - (node.CoordinateY + 3), 6, 6));
+                        e.Graphics.DrawEllipse(new Pen(Brushes.Red), new Rectangle(node.CoordinateX - node.Range, 500 - (node.CoordinateY) - node.Range, node.Range * 2, node.Range * 2));
+                        e.Graphics.DrawString(node.NodeId.ToString(), new Font("Arial", 11), new SolidBrush(Color.Red), node.CoordinateX, 500 - (node.CoordinateY + 20), new StringFormat());
+                    }
+                    else
+                    {
+                        e.Graphics.FillEllipse(Brushes.Black, new Rectangle(node.CoordinateX - 3, 500 - (node.CoordinateY + 3), 6, 6));
+                        //e.Graphics.DrawEllipse(new Pen(Brushes.Black), new Rectangle(node.CoordinateX - node.Range, 500 - (node.CoordinateY) - node.Range, node.Range * 2, node.Range * 2));
+                        e.Graphics.DrawString(node.NodeId.ToString(), new Font("Arial", 11), new SolidBrush(Color.Black), node.CoordinateX, 500 - (node.CoordinateY + 20), new StringFormat());
+                    }    
+                }
             }
-
-            //bmp.Dispose();
-            //bmpG.Dispose();
-            //b.Dispose();
         }
     }
 }

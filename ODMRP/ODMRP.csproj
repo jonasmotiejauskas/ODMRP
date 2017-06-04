@@ -56,6 +56,9 @@
     <Compile Include="ODMRPelements\Node.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIelements\NodePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UIelements\NetworkPanel.cs">
       <SubType>Component</SubType>
     </Compile>

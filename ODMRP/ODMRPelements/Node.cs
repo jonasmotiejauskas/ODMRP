@@ -23,7 +23,7 @@ namespace ODMRP.ODMRPelements
         public Node()
         {
             NodeId = new IncrementalNumberGenerator().Number;
-            Range = 80;
+            Range = 100;
         }
 
         public int CoordinateX
