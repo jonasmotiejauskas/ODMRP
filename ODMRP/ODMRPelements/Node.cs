@@ -14,6 +14,8 @@ namespace ODMRP.ODMRPelements
         private int _coordinateX;
         private int _coordinateY;
         private int _range;
+        private int _sequenceId = 0;
+        List<MessagePrint> MessageCache = new List<MessagePrint>();
 
         public virtual void OnThresholdReached(object sender, EventArgs e)
         {
@@ -54,6 +56,16 @@ namespace ODMRP.ODMRPelements
                 OnThresholdReached(this, new EventArgs());
                 _range = value;
             }
+        }
+
+        public int SequenceId
+        {
+            get
+            {
+                _sequenceId++;
+                return _sequenceId;
+            }
+            private set { }
         }
     }
 }

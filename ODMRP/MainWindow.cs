@@ -27,8 +27,10 @@ namespace ODMRP
             RemoveNode.Enabled = false;
             CoordXInput.Enabled = false;
             CoordXInput.ValueChanged += CoordXInput_ValueChanged;
+            CoordXInput.Validated += CoordXInput_ValueChanged;
             CoordYInput.Enabled = false;
             CoordYInput.ValueChanged += CoordYInput_ValueChanged;
+            CoordYInput.Validated += CoordYInput_ValueChanged;
         }
 
         private void CoordYInput_ValueChanged(object sender, EventArgs e)
