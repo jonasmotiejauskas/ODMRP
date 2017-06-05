@@ -9,6 +9,7 @@ namespace ODMRP.ODMRPelements
     class JoinData : Packet
     {
         public int TTL;
+        public int HopCount = 0;
 
         public JoinData( int ttl, int sN, int sI, int phI, int mgI)
         {

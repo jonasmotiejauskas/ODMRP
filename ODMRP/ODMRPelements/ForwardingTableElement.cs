@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace ODMRP.ODMRPelements
 {
-    struct MessagePrint
+    struct ForwardingTableElement
     {
-        public int Source;
-        public int Sequence;
+        public int MulticastIp;
 
-        public MessagePrint(int sI, int sQ)
+        public ForwardingTableElement(int mi)
         {
-            Source = sI;
-            Sequence = sQ;
+            MulticastIp = mi;
         }
     }
 }

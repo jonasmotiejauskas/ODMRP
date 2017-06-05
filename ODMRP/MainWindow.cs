@@ -53,7 +53,7 @@ namespace ODMRP
         {
             if(NodeSelectPanel.Controls.Count < 20)
             {
-                ODMRPelements.Node newNode = new ODMRPelements.Node() { CoordinateX = 0, CoordinateY = 0 };
+                ODMRPelements.Node newNode = new ODMRPelements.Node(NodeSelectPanel.Controls) { CoordinateX = 0, CoordinateY = 0 };
 
                 UIelements.NodePanel newPanel = new UIelements.NodePanel(newNode);
                 newPanel.Click += NewPanel_Click;
@@ -121,8 +121,49 @@ namespace ODMRP
 
         private void SendMessageButton_Click(object sender, EventArgs e)
         {
-            
-        }
+            if(NodeFromIdInput.Value == NodeToIdInput.Value)
+            {
+                MessageBox.Show("Cannot Send data to the same node");
+            }
+            bool one = false;
+            bool two = false;
 
+            foreach(var a in NodeSelectPanel.Controls)
+            {
+                if(a is UIelements.NodePanel)
+                {
+                    if ((a as UIelements.NodePanel).Node.NodeId == NodeFromIdInput.Value)
+                    {
+                        one = true;
+                    }
+                    if ((a as UIelements.NodePanel).Node.NodeId == NodeToIdInput.Value)
+                    {
+                        two = true;
+                    }
+                }
+            }
+
+            if (!one)
+            {
+                MessageBox.Show("Node " + NodeFromIdInput.Value.ToString() + " doesnt exist");
+            }
+            else if (!two)
+            {
+                MessageBox.Show("Node " + NodeToIdInput.Value.ToString() + " doesnt exist");
+            }
+            else
+            {
+                foreach (var a in NodeSelectPanel.Controls)
+                {
+                    if (a is UIelements.NodePanel)
+                    {
+                        if ((a as UIelements.NodePanel).Node.NodeId == NodeFromIdInput.Value)
+                        {
+                            (a as UIelements.NodePanel).Node.SendMessage((int)NodeToIdInput.Value);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

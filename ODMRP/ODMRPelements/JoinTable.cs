@@ -13,7 +13,7 @@ namespace ODMRP.ODMRPelements
 
         public JoinTable(int nhI, int sN, int sI, int phI, int mgI)
         {
-            PacketType = 1;
+            PacketType = 2;
             SequenceNumber = sN;
             SourceIp = sI;
             PreviousHopIp = phI;
