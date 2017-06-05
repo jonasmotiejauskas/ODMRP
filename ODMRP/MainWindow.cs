@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace ODMRP
@@ -31,6 +33,13 @@ namespace ODMRP
             CoordYInput.Enabled = false;
             CoordYInput.ValueChanged += CoordYInput_ValueChanged;
             CoordYInput.Validated += CoordYInput_ValueChanged;
+
+            ODMRPelements.Node.PacketSent += Node_PacketSent;
+        }
+
+        private void Node_PacketSent(object sender, EventArgs e)
+        {
+            //
         }
 
         private void CoordYInput_ValueChanged(object sender, EventArgs e)
@@ -70,25 +79,32 @@ namespace ODMRP
 
         private void NewPanel_Click(object sender, EventArgs e)
         {
-            
-
-            foreach (var a in NodeSelectPanel.Controls)
+            if(!(sender as UIelements.NodePanel).Selected)
             {
-                if(a is UIelements.NodePanel)
+
+                foreach (var a in NodeSelectPanel.Controls)
                 {
-                    (a as UIelements.NodePanel).NodeUnselect();
+                    if (a is UIelements.NodePanel)
+                    {
+                        (a as UIelements.NodePanel).NodeUnselect();
+                    }
                 }
-            }
 
             (sender as UIelements.NodePanel).NodeSelect();
-            selectedNode = (sender as UIelements.NodePanel).Node;
-            CoordXInput.Value = selectedNode.CoordinateY;
-            CoordYInput.Value = selectedNode.CoordinateX;
+                selectedNode = (sender as UIelements.NodePanel).Node;
+                CoordXInput.Value = selectedNode.CoordinateY;
+                CoordYInput.Value = selectedNode.CoordinateX;
 
 
-            RemoveNode.Enabled = true;
-            CoordXInput.Enabled = true;
-            CoordYInput.Enabled = true;
+                RemoveNode.Enabled = true;
+                CoordXInput.Enabled = true;
+                CoordYInput.Enabled = true;
+            }
+            else
+            {
+                TableWindow Tables = new TableWindow(selectedNode);
+                Tables.Show();
+            }
         }
 
         private void RemoveNode_Click(object sender, EventArgs e)
@@ -162,6 +178,21 @@ namespace ODMRP
                             (a as UIelements.NodePanel).Node.SendMessage((int)NodeToIdInput.Value);
                         }
                     }
+                }
+            }
+        }
+
+        private void NodesRefresh_Click(object sender, EventArgs e)
+        {
+            foreach(var a in NodeSelectPanel.Controls)
+            {
+                if(a is UIelements.NodePanel)
+                {
+                    new Thread(() =>
+                    {                     
+                        Thread.CurrentThread.IsBackground = true;
+                        (a as UIelements.NodePanel).Node.Refresh();
+                    }).Start();  
                 }
             }
         }

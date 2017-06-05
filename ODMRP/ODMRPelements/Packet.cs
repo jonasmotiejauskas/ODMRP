@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ODMRP.ODMRPelements
 {
-    class Packet
+    public class Packet
     {
         public int PacketType;
         public int SequenceNumber;

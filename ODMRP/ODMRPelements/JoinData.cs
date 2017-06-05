@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ODMRP.ODMRPelements
 {
-    class JoinData : Packet
+    public class JoinData : Packet
     {
         public int TTL;
         public int HopCount = 0;

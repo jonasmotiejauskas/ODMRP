@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ODMRP.ODMRPelements
 {
-    class JoinTable : Packet
+    public class JoinTable : Packet
     {
         public bool FG_Flag = false;
         public int NextHopIp;

@@ -52,6 +52,7 @@
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="ODMRPelements\DataPacket.cs" />
     <Compile Include="ODMRPelements\ForwardingTableElement.cs" />
     <Compile Include="ODMRPelements\IncrementalNumberGenerator.cs" />
     <Compile Include="ODMRPelements\JoinData.cs" />
@@ -63,6 +64,12 @@
     <Compile Include="ODMRPelements\RoutingTableElement.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TableWindow.Designer.cs">
+      <DependentUpon>TableWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="UIelements\NodePanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -81,6 +88,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TableWindow.resx">
+      <DependentUpon>TableWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -55,6 +55,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.Option1Name = new System.Windows.Forms.Label();
             this.RemoveNode = new System.Windows.Forms.Button();
+            this.NodesRefresh = new System.Windows.Forms.Button();
             this.NodeSelectPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -159,6 +160,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panel1.Controls.Add(this.NodesRefresh);
             this.panel1.Controls.Add(this.panel4);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
@@ -365,6 +367,16 @@
             this.RemoveNode.UseVisualStyleBackColor = true;
             this.RemoveNode.Click += new System.EventHandler(this.RemoveNode_Click);
             // 
+            // NodesRefresh
+            // 
+            this.NodesRefresh.Location = new System.Drawing.Point(675, 21);
+            this.NodesRefresh.Name = "NodesRefresh";
+            this.NodesRefresh.Size = new System.Drawing.Size(62, 58);
+            this.NodesRefresh.TabIndex = 12;
+            this.NodesRefresh.Text = "Refresh Nodes";
+            this.NodesRefresh.UseVisualStyleBackColor = true;
+            this.NodesRefresh.Click += new System.EventHandler(this.NodesRefresh_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -431,6 +443,7 @@
         private System.Windows.Forms.NumericUpDown NodeToIdInput;
         private System.Windows.Forms.NumericUpDown NodeFromIdInput;
         private System.Windows.Forms.Label NodeSelectLabel;
+        private System.Windows.Forms.Button NodesRefresh;
     }
 }
 

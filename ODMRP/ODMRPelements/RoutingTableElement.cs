@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ODMRP.ODMRPelements
 {
-    struct RoutingTableElement
+    public struct RoutingTableElement
     {
         public int SourceIp;
         public int NextHop;

@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static System.Windows.Forms.Control;
 
 namespace ODMRP.ODMRPelements
 {
-    class Node
+    public class Node
     {
         public static event EventHandler NodeUpdate;
+        public static event EventHandler PacketSent;
 
         public int NodeId { get; private set; }
         private int _coordinateX;
@@ -19,8 +21,8 @@ namespace ODMRP.ODMRPelements
         private int _sequenceId = 0;
         ControlCollection AllNodes;
         List<MessagePrint> MessageCache = new List<MessagePrint>();
-        List<RoutingTableElement> RoutingTable = new List<RoutingTableElement>();
-        List<ForwardingTableElement> ForwardingTable = new List<ForwardingTableElement>();
+        public List<RoutingTableElement> RoutingTable = new List<RoutingTableElement>();
+        public List<ForwardingTableElement> ForwardingTable = new List<ForwardingTableElement>();
 
         public void SendMessage(int receiveIp)
         {
@@ -31,7 +33,9 @@ namespace ODMRP.ODMRPelements
             }
             else
             {
-                //SendData(receiveIp);
+                DataPacket newDataPacket = new DataPacket(SequenceId, receiveIp, NodeId, "");
+                MessageCache.Add(new MessagePrint(newDataPacket.SourceIp, newDataPacket.SequenceId));
+                SendData(newDataPacket);
             }
         }
 
@@ -49,8 +53,12 @@ namespace ODMRP.ODMRPelements
                 }
                 else
                 {
-                    JoinData newPacket = new JoinData(packet.TTL-1, packet.SequenceNumber, packet.SourceIp, NodeId, packet.MulticastGroupIp);
-                    newPacket.HopCount = packet.HopCount + 1;
+                    JoinData newPacket = new JoinData(packet.TTL, packet.SequenceNumber, packet.SourceIp, NodeId, packet.MulticastGroupIp);
+                    if(newPacket.SourceIp != NodeId)
+                    {
+                        newPacket.HopCount = packet.HopCount + 1;
+                        newPacket.TTL--;
+                    }
                     
                     if (newPacket.TTL > 0)
                     {
@@ -74,17 +82,49 @@ namespace ODMRP.ODMRPelements
                 {
                     int nextHop = 0;
 
-                    foreach(var a in RoutingTable)
+                    foreach (var a in RoutingTable)
                     {
-                        if(a.SourceIp == packet.SourceIp)
+                        if (a.SourceIp == packet.SourceIp)
                         {
                             nextHop = a.NextHop;
                         }
                     }
 
-                    JoinTable newJoinTable = new JoinTable( nextHop, packet.SequenceNumber, packet.SourceIp, NodeId, packet.MulticastGroupIp);
+                    JoinTable newJoinTable = new JoinTable(nextHop, packet.SequenceNumber, packet.SourceIp, NodeId, packet.MulticastGroupIp);
                     SendJoinTable(newJoinTable);
                 }
+            }
+        }
+
+        private void SendMessage(DataPacket packet)
+        {
+            if (packet.ReceiveIp == NodeId)
+            {
+                MessageBox.Show("Packet Arrived");
+            }
+            if (ForwardingTable.Contains(new ForwardingTableElement(packet.ReceiveIp)))
+            {
+                if (!MessageCache.Contains(new MessagePrint(packet.SourceIp, packet.SequenceId)))
+                {
+                    MessageCache.Add(new MessagePrint(packet.SourceIp, packet.SequenceId));
+                    SendData(packet);
+                }        
+            }
+        }
+
+        private void SendData(DataPacket packet)
+        {
+            foreach (var nnode in NodeScanner.GetNearbyNodes(this, AllNodes))
+            {
+                int timeElapsed = 0;
+                new Thread(() =>
+                {
+                    Thread.Sleep((int)(nnode.Key * 10) - timeElapsed);
+                    timeElapsed += (int)(nnode.Key * 10);
+                    Thread.CurrentThread.IsBackground = true;
+                    nnode.Value.SendMessage(packet);
+                    OnPacketSent(packet, new EventArgs());
+                }).Start();
             }
         }
 
@@ -95,10 +135,11 @@ namespace ODMRP.ODMRPelements
                 int timeElapsed = 0;
                 new Thread(() =>
                 {
-                    Thread.Sleep((int)(nnode.Key * 110) - timeElapsed);
-                    timeElapsed += (int)(nnode.Key * 110);
+                    Thread.Sleep((int)(nnode.Key * 10) - timeElapsed);
+                    timeElapsed += (int)(nnode.Key * 10);
                     Thread.CurrentThread.IsBackground = true;
                     nnode.Value.ReceiveJoinDataPacket(packet);
+                    OnPacketSent(packet, new EventArgs());
                 }).Start();
             }
         }
@@ -110,10 +151,11 @@ namespace ODMRP.ODMRPelements
                 new Thread(() =>
                 {
                     int timeElapsed = 0;
-                    Thread.Sleep((int)(nnode.Key * 110) - timeElapsed);
-                    timeElapsed += (int)(nnode.Key * 110);
+                    Thread.Sleep((int)(nnode.Key * 10) - timeElapsed);
+                    timeElapsed += (int)(nnode.Key * 10);
                     Thread.CurrentThread.IsBackground = true;
                     nnode.Value.ReceiveJoinTablePacket(packet);
+                    OnPacketSent(packet, new EventArgs());
                 }).Start();
             }
         }
@@ -121,6 +163,11 @@ namespace ODMRP.ODMRPelements
         public virtual void OnThresholdReached(object sender, EventArgs e)
         {
             NodeUpdate?.Invoke(sender, e);
+        }
+
+        public virtual void OnPacketSent(object sender, EventArgs e)
+        {
+            PacketSent?.Invoke(sender, e);
         }
 
         public Node(ControlCollection all)
@@ -168,6 +215,13 @@ namespace ODMRP.ODMRPelements
                 return _sequenceId;
             }
             private set { }
+        }
+
+        public void Refresh()
+        {
+            RoutingTable.Clear();
+            ForwardingTable.Clear();
+            MessageCache.Clear();
         }
     }
 }

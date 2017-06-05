@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ODMRP.ODMRPelements
 {
-    struct ForwardingTableElement
+    public struct ForwardingTableElement
     {
         public int MulticastIp;
 
